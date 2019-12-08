@@ -149,7 +149,10 @@ func (w WapSNMP) Get(oid Oid) (interface{}, error) {
 	result := varbinds[1].([]interface{})[2]
 
 	if result == nil {
-		return nil, fmt.Errorf("%v", varbinds[1].([]interface{})[3])
+		if len(varbinds[1].([]interface{})) > 3 {
+			return nil, fmt.Errorf("%v", varbinds[1].([]interface{})[3])
+		}
+		return nil, fmt.Errorf("%v", varbinds[1])
 	}
 
 	return result, nil
